@@ -1,0 +1,370 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <limits>
+#include <memory>
+#include <CLI/CLI.hpp>
+#include <nlohmann/json.hpp>
+
+class Vehicle {
+
+protected:			//Durch protected sind diese vars auch für abgeleitete klassen verfügbar
+    std::string name;
+    int age;
+    float retail_price;
+    int sales_price;
+
+public:
+    Vehicle(std::string n, int a, float r, int s) : name(n), age(a), retail_price(r), sales_price(s) {}
+
+    virtual ~Vehicle() = default;
+
+    static Vehicle fromUserInput() {
+        std::string n;
+        int a, s;
+        float r ;
+
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+        std::cout << "\n" << "Name: ";
+        std::getline(std::cin, n);
+
+        std::cout << "Age: ";
+        std::cin >> a;
+
+        std::cout << "Retail price: ";
+        std::cin >> r;
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Necessary, cause otherwise this entry gets jumped
+        return Vehicle(n, a, r, 0);
+    }
+
+    static Vehicle fromUserInput(std::string n, int a, int s, float r) {
+	return Vehicle(n, a, r, 0);
+    }
+
+    virtual void print() const {
+        std::cout 	<<"\n\n"
+			<< "Name: " << name << "\n"
+                    << "Age: " << age << "\n"
+                    << "Retail price: " << retail_price << "\n\n";
+    }
+
+
+    void operator++() {			//adding the ++ operator
+
+        age++;
+
+    }
+	virtual nlohmann::json makeJsonObject() const {
+		nlohmann::json JsonVehicle = {
+			{"Object", "Vehicle"},
+			{"Name", name},
+			{"Age", age},
+			{"Retail_price", retail_price}
+		};
+	return JsonVehicle;
+	}
+
+
+};
+
+
+class Bike : public Vehicle {
+private:
+    int number_of_tires = 2;
+
+public:
+
+    Bike(std::string n, int a, float r, int s) : Vehicle(n, a, r, s) {}
+
+
+    static Bike fromUserInput() {
+        std::string n;
+        int a, s;
+        float r ;
+
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+        std::cout << "\n" << "Name: ";
+        std::getline(std::cin, n);
+
+        std::cout << "Age: ";
+        std::cin >> a;
+
+        std::cout << "Retail price: ";
+        std::cin >> r;
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Necessary, cause otherwise this entry gets jumped
+        return Bike(n, a, r, 0);
+    }
+
+
+    static Bike fromUserInput(std::string n, int a, int s, float r) {
+	return Bike(n, a, r, 0);
+    }
+    void print() const override {
+        std::cout 	<< "\n\n"
+			<< "Name: " << name << "\n"
+                    << "Age: " << age << "\n"
+                    << "Retail price: " << retail_price << "\n"
+                    << "Number of Tires: " << number_of_tires << "\n\n";
+    }
+
+    nlohmann::json makeJsonObject() const override {
+		nlohmann::json JsonBike = {
+			{"Object", "Vehicle"},
+			{"Name", name},
+			{"Age", age},
+			{"Retail_price", retail_price},
+			{"Number of Tires", number_of_tires}
+		
+		
+		};
+	return JsonBike;
+    }
+};
+
+class Car : public Vehicle {
+private:
+    int number_of_tires = 4;
+
+public:
+
+    Car(std::string n, int a, float r, int s) : Vehicle(n, a, r, s) {}
+
+
+    static Car fromUserInput() {
+        std::string n;
+        int a, s;
+        float r ;
+
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+        std::cout << "\n" << "Name: ";
+        std::getline(std::cin, n);
+
+        std::cout << "Age: ";
+        std::cin >> a;
+
+        std::cout << "Retail price: ";
+        std::cin >> r;
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Necessary, cause otherwise this entry gets jumped
+        return Car(n, a, r, 0);
+    }
+
+    static Car fromUserInput(std::string n, int a, int s, float r) {
+	return Car(n, a, r, 0);
+    }
+    
+    void print() const override {
+        std::cout 	<<"\n\n"
+			<< "Name: " << name << "\n"
+                    << "Age: " << age << "\n"
+                    << "Retail price: " << retail_price << "\n"
+                    << "Number of Tires: " << number_of_tires << "\n\n";
+    }
+
+    nlohmann::json  makeJsonObject() const override {
+		nlohmann::json JsonCar = {
+			{"Object", "Vehicle"},
+			{"Name", name},
+			{"Age", age},
+			{"Retail_price", retail_price},
+			{"Number of Tires", number_of_tires}
+		};
+	return JsonCar;
+    }
+};
+
+/*
+class JsonVehicle {
+	private:
+		nlohmann::json profile;
+	
+	public:
+
+    JsonVehicle(nlohmann::json p) : profile(p) {}
+
+static JsonVehicle Factory(nlohmann::json JVehicle){
+	return JVehicle;
+}
+*/
+
+void print_Vehicles(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {
+
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    for(const auto& actualVehicle : Vehicles) {
+        actualVehicle->print();
+    }
+}
+
+void age_Vehicles(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {	//Attention, & stands for ref and is neaded,
+    //otherwise you would create a copy which is sensless, cause your won't save that copy.
+
+
+    for(auto& actualcar : Vehicles) {
+
+        ++(*actualcar);			// using the ++ operator
+    }
+
+}
+
+std::vector<nlohmann::json> create_json_vector(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {
+	
+	std::vector<nlohmann::json> JsonVehicles;
+	for (auto& actualVehicle : Vehicles) { 
+	
+     		JsonVehicles.push_back(actualVehicle->makeJsonObject());
+	}
+
+	return JsonVehicles;
+}
+
+
+int main (int argc, char** argv) {
+    std::vector<std::unique_ptr<Vehicle>> Vehicles;
+	std::vector<nlohmann::json> JsonVehicles;	
+    
+    CLI::App app{"Car_Bike_Programm: CLI Version"};
+
+	app.set_version_flag("--version", "1.0.0");
+	
+	bool commands = false;
+	auto optCommands = app.add_flag("-c, --commands", commands, "Enable command mode");
+	
+	std::string name = "StandardName!";
+	auto optName = app.add_option("-n, --name", name, "Add vehicles name")->needs(optCommands);
+	
+	int age = 0 ;
+	auto optAge = app.add_option("-a, --age", age, "Add vehicles age")->needs(optCommands);
+
+	float retail_price = 500;
+	auto optRetailPrice = app.add_option("-r, --retail", retail_price, "Add vehicles retail_price")->needs(optCommands);
+
+	std::string output_file = "Vector.json"
+	app.add_option("-s , --save", Vector.json, "Save your Vehicles at this file")->needs(optCommands);
+
+	std::string input_file = "Vector.json"
+	auto optLoad = app.add_option("-l , --load", input_file, "Load your Vehicles from this file")->needs(optCommands)->check(CLI::ExistingFile);
+
+	bool addVehicle = false; 
+	app.add_flag("-V, --addVehicle", addVehicle, "Option for adding a Vehicle")
+		->needs(optCommands)
+		->needs(optName)
+		->needs(optAge)
+		->needs(optRetailPrice);
+	
+	bool addCar = false; 
+	app.add_flag("-C, --addCar", addCar, "Option for adding a Car")
+		->needs(optCommands)
+		->needs(optName)
+		->needs(optAge)
+		->needs(optRetailPrice);
+	
+	bool addBike = false; 
+	app.add_flag("-B, --addBike", addBike, "Option for adding a Bike")
+		->needs(optCommands)
+		->needs(optName)
+		->needs(optAge)
+		->needs(optRetailPrice);
+
+	CLI11_PARSE(app, argc, argv);	
+
+	if(optLoad->count() > 0) {
+		std::ifstream in(input_file);
+		nlohmann::json temp;
+		in >> temp;
+		JsonVehicle.push_back(temp);						//Hier bin ich stehen geblieben
+	}
+	
+	if(addVehicle){
+	       	Vehicles.push_back(std::make_unique<Vehicle>(Vehicle::fromUserInput(name,age, 0 ,retail_price)));
+		Vehicles.back()->print();
+	}
+
+	if(addBike){
+	       	Vehicles.push_back(std::make_unique<Bike>(Bike::fromUserInput(name,age, 0 ,retail_price)));
+		Vehicles.back()->print();
+	}
+    
+	if(addCar){
+	       	Vehicles.push_back(std::make_unique<Car>(Car::fromUserInput(name,age, 0 ,retail_price)));
+		Vehicles.back()->print();
+	}
+      
+	JsonVehicles = create_json_vector(Vehicles);
+
+    for(const auto& actualVehicle : JsonVehicles) {
+	    std::cout <<actualVehicle.dump(4) << "\n";
+    }
+
+	char choice;
+
+    while(!commands) {
+
+        std::cout 	<< "Choose option:\n"
+                    <<"(1) Create a Vehicle and insert at the end\n"
+                    <<"(2) Create a Car and insert at the end\n"
+                    <<"(3) Create a Bike and insert at the end\n"
+                    <<"(4) Print list\n"
+                    <<"(5) Delete Vehicles\n"
+                    <<"(6) Age Vehicles\n"
+                    <<"(q) Quit\n\n\n"
+                    <<("Type option :");
+
+        std::cin 	>> choice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Necessary, cause otherwise this entry gets jumped
+        std::cout	<<"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+        switch(choice) {
+        case '1':
+            Vehicles.push_back(std::make_unique<Vehicle>(Vehicle::fromUserInput()));
+
+
+            break;
+
+        case '2':
+            Vehicles.push_back(std::make_unique<Car>(Car::fromUserInput()));
+
+            break;
+
+        case '3':
+            Vehicles.push_back(std::make_unique<Bike>(Bike::fromUserInput()));
+
+            break;
+
+        case '4':
+            print_Vehicles(Vehicles);
+            break;
+
+        case '5':
+            Vehicles.clear();
+
+            break;
+
+        case '6':
+            age_Vehicles(Vehicles);
+
+
+
+            break;
+
+        case 'q':
+            return 0;
+
+        default:
+            printf("Wrong character!\n");
+
+
+
+        }
+
+    } 
+    return 0;
+
+
+
+}
+
+

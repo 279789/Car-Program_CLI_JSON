@@ -1,0 +1,14 @@
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/CMakeFiles/Car_Bike-Program_CLI_JSON.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/CMakeFiles/edit_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/CMakeFiles/rebuild_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/CMakeFiles/edit_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/CMakeFiles/rebuild_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/fuzz/CMakeFiles/edit_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/fuzz/CMakeFiles/rebuild_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/src/CMakeFiles/CLI11.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/src/CMakeFiles/edit_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/src/CMakeFiles/rebuild_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/single-include/CMakeFiles/edit_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/single-include/CMakeFiles/rebuild_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/json-build/CMakeFiles/edit_cache.dir
+/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/json-build/CMakeFiles/rebuild_cache.dir

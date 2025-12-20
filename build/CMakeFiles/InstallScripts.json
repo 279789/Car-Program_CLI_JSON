@@ -1,0 +1,12 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/cmake_install.cmake",
+		"/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/cmake_install.cmake",
+		"/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/fuzz/cmake_install.cmake",
+		"/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/src/cmake_install.cmake",
+		"/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-build/single-include/cmake_install.cmake",
+		"/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/json-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
