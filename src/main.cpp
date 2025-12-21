@@ -16,6 +16,7 @@ protected:			//Durch protected sind diese vars auch für abgeleitete klassen ver
 
 public:
     Vehicle(std::string n, int a, float r, int s) : name(n), age(a), retail_price(r), sales_price(s) {}
+	Vehicle(const nlohmann::json& J) : name(J["Name"]), age(J["Age"]), retail_price(J["Retail_price"]), sales_price(0) {}	
 
     virtual ~Vehicle() = default;
 
@@ -77,7 +78,8 @@ private:
 public:
 
     Bike(std::string n, int a, float r, int s) : Vehicle(n, a, r, s) {}
-
+//	Bike(const nlohmann::json& J) : name(J["Name"]), age(J["Age"], retail_price(J["Retail_price"]) {}	
+	Bike(const nlohmann::json J) : Vehicle(J) {}
 
     static Bike fromUserInput() {
         std::string n;
@@ -113,11 +115,11 @@ public:
 
     nlohmann::json makeJsonObject() const override {
 		nlohmann::json JsonBike = {
-			{"Object", "Vehicle"},
+			{"Object", "Bike"},
 			{"Name", name},
 			{"Age", age},
 			{"Retail_price", retail_price},
-			{"Number of Tires", number_of_tires}
+			{"Number_of_Tires", number_of_tires}
 		
 		
 		};
@@ -132,9 +134,10 @@ private:
 public:
 
     Car(std::string n, int a, float r, int s) : Vehicle(n, a, r, s) {}
-
-
-    static Car fromUserInput() {
+//	Car(const nlohmann::json& J) : name(J["Name"]), age(J["Age"], retail_price(J["Retail_price"]) {}	
+	Car(const nlohmann::json J) : Vehicle(J) {}
+   
+       	static Car fromUserInput() {
         std::string n;
         int a, s;
         float r ;
@@ -168,11 +171,11 @@ public:
 
     nlohmann::json  makeJsonObject() const override {
 		nlohmann::json JsonCar = {
-			{"Object", "Vehicle"},
+			{"Object", "Car"},
 			{"Name", name},
 			{"Age", age},
 			{"Retail_price", retail_price},
-			{"Number of Tires", number_of_tires}
+			{"Number_of_Tires", number_of_tires}
 		};
 	return JsonCar;
     }
@@ -211,9 +214,8 @@ void age_Vehicles(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {	//Attention
 
 }
 
-std::vector<nlohmann::json> create_json_vector(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {
+std::vector<nlohmann::json> create_json_vector(std::vector<std::unique_ptr<Vehicle>>& Vehicles, std::vector<nlohmann::json>& JsonVehicles ) {
 	
-	std::vector<nlohmann::json> JsonVehicles;
 	for (auto& actualVehicle : Vehicles) { 
 	
      		JsonVehicles.push_back(actualVehicle->makeJsonObject());
@@ -223,7 +225,9 @@ std::vector<nlohmann::json> create_json_vector(std::vector<std::unique_ptr<Vehic
 }
 
 
-int main (int argc, char** argv) {
+int main (int argc, char** argv) {			//Als nächstes muss der geladene Json Vector auf Vehicle gecastet werden. 
+							//Dazu müssen über eine if vcerzweigung die passenden Konstruktoren für jedes 
+							//Jobject aufgerufen werden. Auswahl über Number of tires.
     std::vector<std::unique_ptr<Vehicle>> Vehicles;
 	std::vector<nlohmann::json> JsonVehicles;	
     
@@ -243,11 +247,11 @@ int main (int argc, char** argv) {
 	float retail_price = 500;
 	auto optRetailPrice = app.add_option("-r, --retail", retail_price, "Add vehicles retail_price")->needs(optCommands);
 
-	std::string output_file = "Vector.json"
-	app.add_option("-s , --save", Vector.json, "Save your Vehicles at this file")->needs(optCommands);
+	std::string output_file = "Vector.json";
+	auto optSave = app.add_option("-s , --save", output_file, "Save your Vehicles at this file")->check(CLI::ExistingFile);
 
-	std::string input_file = "Vector.json"
-	auto optLoad = app.add_option("-l , --load", input_file, "Load your Vehicles from this file")->needs(optCommands)->check(CLI::ExistingFile);
+	std::string input_file = "Vector.json";
+	auto optLoad = app.add_option("-l , --load", input_file, "Load your Vehicles from this file")->check(CLI::ExistingFile);
 
 	bool addVehicle = false; 
 	app.add_flag("-V, --addVehicle", addVehicle, "Option for adding a Vehicle")
@@ -271,14 +275,18 @@ int main (int argc, char** argv) {
 		->needs(optRetailPrice);
 
 	CLI11_PARSE(app, argc, argv);	
-
+	
 	if(optLoad->count() > 0) {
+		JsonVehicles.clear();
 		std::ifstream in(input_file);
 		nlohmann::json temp;
 		in >> temp;
-		JsonVehicle.push_back(temp);						//Hier bin ich stehen geblieben
+		for(const auto& obj : temp) {
+		JsonVehicles.push_back(obj);
+		}
 	}
-	
+
+
 	if(addVehicle){
 	       	Vehicles.push_back(std::make_unique<Vehicle>(Vehicle::fromUserInput(name,age, 0 ,retail_price)));
 		Vehicles.back()->print();
@@ -294,11 +302,17 @@ int main (int argc, char** argv) {
 		Vehicles.back()->print();
 	}
       
-	JsonVehicles = create_json_vector(Vehicles);
+	JsonVehicles = create_json_vector(Vehicles, JsonVehicles);
 
-    for(const auto& actualVehicle : JsonVehicles) {
-	    std::cout <<actualVehicle.dump(4) << "\n";
-    }
+    
+	    std::cout <<static_cast<nlohmann::json>(JsonVehicles).dump(4) << "\n";    
+
+	if(optSave->count()  > 0) {
+			std::ofstream out(output_file);
+			out << static_cast<nlohmann::json>(JsonVehicles).dump(4);
+			out.close();
+	}
+
 
 	char choice;
 

@@ -1,0 +1,30 @@
+[
+    {
+        "Age": 3,
+        "Name": "Test",
+        "Number of Tires": 4,
+        "Object": "Vehicle",
+        "Retail_price": 1600.0
+    },
+    {
+        "Age": 3,
+        "Name": "Test",
+        "Number of Tires": 4,
+        "Object": "Vehicle",
+        "Retail_price": 1600.0
+    },
+    {
+        "Age": 3,
+        "Name": "Test",
+        "Number of Tires": 4,
+        "Object": "Vehicle",
+        "Retail_price": 1600.0
+    },
+    {
+        "Age": 3,
+        "Name": "Test",
+        "Number of Tires": 4,
+        "Object": "Vehicle",
+        "Retail_price": 1600.0
+    }
+]
