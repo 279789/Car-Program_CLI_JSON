@@ -5,6 +5,7 @@
 #include <memory>
 #include <CLI/CLI.hpp>
 #include <nlohmann/json.hpp>
+#include <filesystem>
 
 class Vehicle {
 
@@ -16,7 +17,7 @@ protected:			//Durch protected sind diese vars auch für abgeleitete klassen ver
 
 public:
     Vehicle(std::string n, int a, float r, int s) : name(n), age(a), retail_price(r), sales_price(s) {}
-	Vehicle(const nlohmann::json& J) : name(J["Name"]), age(J["Age"]), retail_price(J["Retail_price"]), sales_price(0) {}	
+    Vehicle(const nlohmann::json& J) : name(J["Name"]), age(J["Age"]), retail_price(J["Retail_price"]), sales_price(0) {}
 
     virtual ~Vehicle() = default;
 
@@ -41,12 +42,12 @@ public:
     }
 
     static Vehicle fromUserInput(std::string n, int a, int s, float r) {
-	return Vehicle(n, a, r, 0);
+        return Vehicle(n, a, r, 0);
     }
 
     virtual void print() const {
         std::cout 	<<"\n\n"
-			<< "Name: " << name << "\n"
+                    << "Name: " << name << "\n"
                     << "Age: " << age << "\n"
                     << "Retail price: " << retail_price << "\n\n";
     }
@@ -57,17 +58,15 @@ public:
         age++;
 
     }
-	virtual nlohmann::json makeJsonObject() const {
-		nlohmann::json JsonVehicle = {
-			{"Object", "Vehicle"},
-			{"Name", name},
-			{"Age", age},
-			{"Retail_price", retail_price}
-		};
-	return JsonVehicle;
-	}
-
-
+    virtual nlohmann::json makeJsonObject() const {
+        nlohmann::json JsonVehicle = {
+            {"Object", "Vehicle"},
+            {"Name", name},
+            {"Age", age},
+            {"Retail_price", retail_price}
+        };
+        return JsonVehicle;
+    }
 };
 
 
@@ -78,8 +77,8 @@ private:
 public:
 
     Bike(std::string n, int a, float r, int s) : Vehicle(n, a, r, s) {}
-//	Bike(const nlohmann::json& J) : name(J["Name"]), age(J["Age"], retail_price(J["Retail_price"]) {}	
-	Bike(const nlohmann::json J) : Vehicle(J) {}
+//	Bike(const nlohmann::json& J) : name(J["Name"]), age(J["Age"], retail_price(J["Retail_price"]) {}
+    Bike(const nlohmann::json J) : Vehicle(J) {}
 
     static Bike fromUserInput() {
         std::string n;
@@ -103,27 +102,27 @@ public:
 
 
     static Bike fromUserInput(std::string n, int a, int s, float r) {
-	return Bike(n, a, r, 0);
+        return Bike(n, a, r, 0);
     }
     void print() const override {
         std::cout 	<< "\n\n"
-			<< "Name: " << name << "\n"
+                    << "Name: " << name << "\n"
                     << "Age: " << age << "\n"
                     << "Retail price: " << retail_price << "\n"
                     << "Number of Tires: " << number_of_tires << "\n\n";
     }
 
     nlohmann::json makeJsonObject() const override {
-		nlohmann::json JsonBike = {
-			{"Object", "Bike"},
-			{"Name", name},
-			{"Age", age},
-			{"Retail_price", retail_price},
-			{"Number_of_Tires", number_of_tires}
-		
-		
-		};
-	return JsonBike;
+        nlohmann::json JsonBike = {
+            {"Object", "Bike"},
+            {"Name", name},
+            {"Age", age},
+            {"Retail_price", retail_price},
+            {"Number_of_Tires", number_of_tires}
+
+
+        };
+        return JsonBike;
     }
 };
 
@@ -134,10 +133,10 @@ private:
 public:
 
     Car(std::string n, int a, float r, int s) : Vehicle(n, a, r, s) {}
-//	Car(const nlohmann::json& J) : name(J["Name"]), age(J["Age"], retail_price(J["Retail_price"]) {}	
-	Car(const nlohmann::json J) : Vehicle(J) {}
-   
-       	static Car fromUserInput() {
+//	Car(const nlohmann::json& J) : name(J["Name"]), age(J["Age"], retail_price(J["Retail_price"]) {}
+    Car(const nlohmann::json J) : Vehicle(J) {}
+
+    static Car fromUserInput() {
         std::string n;
         int a, s;
         float r ;
@@ -158,42 +157,29 @@ public:
     }
 
     static Car fromUserInput(std::string n, int a, int s, float r) {
-	return Car(n, a, r, 0);
+        return Car(n, a, r, 0);
     }
-    
+
     void print() const override {
         std::cout 	<<"\n\n"
-			<< "Name: " << name << "\n"
+                    << "Name: " << name << "\n"
                     << "Age: " << age << "\n"
                     << "Retail price: " << retail_price << "\n"
                     << "Number of Tires: " << number_of_tires << "\n\n";
     }
 
     nlohmann::json  makeJsonObject() const override {
-		nlohmann::json JsonCar = {
-			{"Object", "Car"},
-			{"Name", name},
-			{"Age", age},
-			{"Retail_price", retail_price},
-			{"Number_of_Tires", number_of_tires}
-		};
-	return JsonCar;
+        nlohmann::json JsonCar = {
+            {"Object", "Car"},
+            {"Name", name},
+            {"Age", age},
+            {"Retail_price", retail_price},
+            {"Number_of_Tires", number_of_tires}
+        };
+        return JsonCar;
     }
 };
 
-/*
-class JsonVehicle {
-	private:
-		nlohmann::json profile;
-	
-	public:
-
-    JsonVehicle(nlohmann::json p) : profile(p) {}
-
-static JsonVehicle Factory(nlohmann::json JVehicle){
-	return JVehicle;
-}
-*/
 
 void print_Vehicles(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {
 
@@ -214,108 +200,173 @@ void age_Vehicles(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {	//Attention
 
 }
 
-std::vector<nlohmann::json> create_json_vector(std::vector<std::unique_ptr<Vehicle>>& Vehicles, std::vector<nlohmann::json>& JsonVehicles ) {
-	
-	for (auto& actualVehicle : Vehicles) { 
-	
-     		JsonVehicles.push_back(actualVehicle->makeJsonObject());
-	}
+std::vector<nlohmann::json> create_json_vector(std::vector<std::unique_ptr<Vehicle>>& Vehicles) {
+    std::vector<nlohmann::json> JsonVehicles;
 
-	return JsonVehicles;
+    for (auto& actualVehicle : Vehicles) {
+
+        JsonVehicles.push_back(actualVehicle->makeJsonObject());
+    }
+
+    return JsonVehicles;
 }
 
+std::vector<std::unique_ptr<Vehicle>> create_Vector(std::vector<nlohmann::json>& JsonVehicles) {
 
-int main (int argc, char** argv) {			//Als nächstes muss der geladene Json Vector auf Vehicle gecastet werden. 
-							//Dazu müssen über eine if vcerzweigung die passenden Konstruktoren für jedes 
-							//Jobject aufgerufen werden. Auswahl über Number of tires.
     std::vector<std::unique_ptr<Vehicle>> Vehicles;
-	std::vector<nlohmann::json> JsonVehicles;	
-    
+    for (auto& actualVehicle : JsonVehicles) {
+
+        std::string n = actualVehicle ["Name"];
+        int a = actualVehicle ["Age"];
+        int s = 0;
+        double r = actualVehicle["Retail_price"];
+        if(!actualVehicle.contains("Number_of_Tires"))
+            Vehicles.push_back(std::make_unique<Vehicle>(Vehicle::fromUserInput(n,a, 0,r)));
+
+        if(actualVehicle.value("Number_of_Tires", 0) == 2)
+            Vehicles.push_back(std::make_unique<Bike>(Bike::fromUserInput(n,a, 0,r)));
+
+        if(actualVehicle.value("Number_of_Tires", 0) == 4)
+            Vehicles.push_back(std::make_unique<Car>(Car::fromUserInput(n,a, 0,r)));
+    }
+    return Vehicles;
+}
+
+int SaveJsonVector(std::vector<nlohmann::json> JsonVehicles, std::string output_file) {
+
+    if(output_file == "0") {
+
+        while(!output_file.ends_with(".json") || !std::filesystem::exists(output_file)) {
+            std::cout << "\nType Filename: ";
+            std::cin >> output_file;
+            if(!output_file.ends_with(".json"))
+                std::cout <<"\n The Filename has to end on .json !\n\n";
+            if(!std::filesystem::exists(output_file))
+                std::cout <<"\n File does not exisit !\n\n";
+        }
+    }
+
+    if(output_file != "0" && output_file.ends_with(".json") && std::filesystem::exists(output_file)) {
+        std::ofstream out(output_file);
+        out << static_cast<nlohmann::json>(JsonVehicles).dump(4);
+        out.close();
+    }
+
+    return 0;
+}
+
+std::vector<nlohmann::json> LoadJsonVector(std::vector<nlohmann::json> JsonVehicles, std::string input_file) {
+
+    if (input_file == "0") {
+
+        while(!input_file.ends_with(".json") || !std::filesystem::exists(input_file)) {
+
+            std::cout << "\nType Filename: ";
+            std::cin >> input_file;
+            if(!input_file.ends_with(".json"))
+                std::cout <<"\n The Filename has to end on .json !\n\n";
+            if(!std::filesystem::exists(input_file))
+                std::cout <<"\n File does not exisit !\n\n";
+        }
+    }
+
+    if(input_file != "0" && input_file.ends_with(".json") && std::filesystem::exists(input_file)) {
+        JsonVehicles.clear();
+        std::ifstream in(input_file);
+        nlohmann::json temp;
+        in >> temp;
+        for(const auto& obj : temp) {
+            JsonVehicles.push_back(obj);
+        }
+    }
+    return JsonVehicles;
+}
+
+int main (int argc, char** argv) {
+
+
+    std::vector<std::unique_ptr<Vehicle>> Vehicles;
+    std::vector<nlohmann::json> JsonVehicles;
+
     CLI::App app{"Car_Bike_Programm: CLI Version"};
 
-	app.set_version_flag("--version", "1.0.0");
-	
-	bool commands = false;
-	auto optCommands = app.add_flag("-c, --commands", commands, "Enable command mode");
-	
-	std::string name = "StandardName!";
-	auto optName = app.add_option("-n, --name", name, "Add vehicles name")->needs(optCommands);
-	
-	int age = 0 ;
-	auto optAge = app.add_option("-a, --age", age, "Add vehicles age")->needs(optCommands);
+    app.set_version_flag("--version", "1.0.0");
 
-	float retail_price = 500;
-	auto optRetailPrice = app.add_option("-r, --retail", retail_price, "Add vehicles retail_price")->needs(optCommands);
+    bool commands = false;
+    auto optCommands = app.add_flag("-c, --commands", commands, "Enable command mode");
 
-	std::string output_file = "Vector.json";
-	auto optSave = app.add_option("-s , --save", output_file, "Save your Vehicles at this file")->check(CLI::ExistingFile);
+    std::string name = "StandardName!";
+    auto optName = app.add_option("-n, --name", name, "Add vehicles name")->needs(optCommands);
 
-	std::string input_file = "Vector.json";
-	auto optLoad = app.add_option("-l , --load", input_file, "Load your Vehicles from this file")->check(CLI::ExistingFile);
+    int age = 0 ;
+    auto optAge = app.add_option("-a, --age", age, "Add vehicles age")->needs(optCommands);
 
-	bool addVehicle = false; 
-	app.add_flag("-V, --addVehicle", addVehicle, "Option for adding a Vehicle")
-		->needs(optCommands)
-		->needs(optName)
-		->needs(optAge)
-		->needs(optRetailPrice);
-	
-	bool addCar = false; 
-	app.add_flag("-C, --addCar", addCar, "Option for adding a Car")
-		->needs(optCommands)
-		->needs(optName)
-		->needs(optAge)
-		->needs(optRetailPrice);
-	
-	bool addBike = false; 
-	app.add_flag("-B, --addBike", addBike, "Option for adding a Bike")
-		->needs(optCommands)
-		->needs(optName)
-		->needs(optAge)
-		->needs(optRetailPrice);
+    float retail_price = 500;
+    auto optRetailPrice = app.add_option("-r, --retail", retail_price, "Add vehicles retail_price")->needs(optCommands);
 
-	CLI11_PARSE(app, argc, argv);	
-	
-	if(optLoad->count() > 0) {
-		JsonVehicles.clear();
-		std::ifstream in(input_file);
-		nlohmann::json temp;
-		in >> temp;
-		for(const auto& obj : temp) {
-		JsonVehicles.push_back(obj);
-		}
-	}
+    std::string output_file = "Vector.json";
+    auto optSave = app.add_option("-s , --save", output_file, "Save your Vehicles at this file")->check(CLI::ExistingFile);
+
+    std::string input_file = "Vector.json";
+    auto optLoad = app.add_option("-l , --load", input_file, "Load your Vehicles from this file")->check(CLI::ExistingFile);
+
+    bool addVehicle = false;
+    app.add_flag("-V, --addVehicle", addVehicle, "Option for adding a Vehicle")
+       ->needs(optCommands)
+       ->needs(optName)
+       ->needs(optAge)
+       ->needs(optRetailPrice);
+
+    bool addCar = false;
+    app.add_flag("-C, --addCar", addCar, "Option for adding a Car")
+       ->needs(optCommands)
+       ->needs(optName)
+       ->needs(optAge)
+       ->needs(optRetailPrice);
+
+    bool addBike = false;
+    app.add_flag("-B, --addBike", addBike, "Option for adding a Bike")
+       ->needs(optCommands)
+       ->needs(optName)
+       ->needs(optAge)
+       ->needs(optRetailPrice);
+
+    CLI11_PARSE(app, argc, argv);
+
+    if(optLoad->count() > 0) {
+
+        JsonVehicles = LoadJsonVector(JsonVehicles, input_file);
+        Vehicles = create_Vector(JsonVehicles);
+    }
 
 
-	if(addVehicle){
-	       	Vehicles.push_back(std::make_unique<Vehicle>(Vehicle::fromUserInput(name,age, 0 ,retail_price)));
-		Vehicles.back()->print();
-	}
 
-	if(addBike){
-	       	Vehicles.push_back(std::make_unique<Bike>(Bike::fromUserInput(name,age, 0 ,retail_price)));
-		Vehicles.back()->print();
-	}
-    
-	if(addCar){
-	       	Vehicles.push_back(std::make_unique<Car>(Car::fromUserInput(name,age, 0 ,retail_price)));
-		Vehicles.back()->print();
-	}
-      
-	JsonVehicles = create_json_vector(Vehicles, JsonVehicles);
+    if(addVehicle) {
+        Vehicles.push_back(std::make_unique<Vehicle>(Vehicle::fromUserInput(name,age, 0,retail_price)));
+        Vehicles.back()->print();
+    }
 
-    
-	    std::cout <<static_cast<nlohmann::json>(JsonVehicles).dump(4) << "\n";    
+    if(addBike) {
+        Vehicles.push_back(std::make_unique<Bike>(Bike::fromUserInput(name,age, 0,retail_price)));
+        Vehicles.back()->print();
+    }
 
-	if(optSave->count()  > 0) {
-			std::ofstream out(output_file);
-			out << static_cast<nlohmann::json>(JsonVehicles).dump(4);
-			out.close();
-	}
+    if(addCar) {
+        Vehicles.push_back(std::make_unique<Car>(Car::fromUserInput(name,age, 0,retail_price)));
+        Vehicles.back()->print();
+    }
 
 
-	char choice;
 
+
+    if(optSave->count()  > 0) {
+        JsonVehicles = create_json_vector(Vehicles);
+        SaveJsonVector(JsonVehicles, output_file);
+    }
+
+
+    char choice;
+    JsonVehicles = create_json_vector(Vehicles);
     while(!commands) {
 
         std::cout 	<< "Choose option:\n"
@@ -325,6 +376,8 @@ int main (int argc, char** argv) {			//Als nächstes muss der geladene Json Vect
                     <<"(4) Print list\n"
                     <<"(5) Delete Vehicles\n"
                     <<"(6) Age Vehicles\n"
+                    <<"(s) Save\n"
+                    <<"(l) Load\n"
                     <<"(q) Quit\n\n\n"
                     <<("Type option :");
 
@@ -364,7 +417,22 @@ int main (int argc, char** argv) {			//Als nächstes muss der geladene Json Vect
 
             break;
 
+        case 's':							//Save funktion implementieren, wo man auch den filename eingeben kann.
+            output_file = "0";
+            JsonVehicles = create_json_vector(Vehicles);
+            SaveJsonVector(JsonVehicles, output_file);
+
+            break;
+
+        case 'l':							//Save funktion implementieren, wo man auch den filename eingeben kann.
+            input_file = "0";
+            JsonVehicles = LoadJsonVector(JsonVehicles, input_file);
+            Vehicles = create_Vector(JsonVehicles);
+            break;
+
+
         case 'q':
+
             return 0;
 
         default:
@@ -374,7 +442,7 @@ int main (int argc, char** argv) {			//Als nächstes muss der geladene Json Vect
 
         }
 
-    } 
+    }
     return 0;
 
 

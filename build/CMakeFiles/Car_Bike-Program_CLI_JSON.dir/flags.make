@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/json-src/include -isystem /home/phil/Programieren/Objektorientierung/repos/Car-Program_CLI_JSON/build/_deps/cli11-src/include
 
-CXX_FLAGS = 
+CXX_FLAGS = -std=c++23
 
