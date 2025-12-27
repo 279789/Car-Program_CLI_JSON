@@ -1,15 +1,8 @@
 [
     {
-        "Age": 23,
-        "Name": "Ducati",
-        "Number_of_Tires": 2,
-        "Object": "Bike",
-        "Retail_price": 5000.0
-    },
-    {
-        "Age": 23,
-        "Name": "Porsche",
+        "Age": 324,
+        "Name": "weruihl",
         "Object": "Vehicle",
-        "Retail_price": 234567.0
+        "Retail_price": 234.0
     }
 ]
